@@ -1,34 +1,123 @@
-import coffeeImage from "@/assets/images/take-a-break.png";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  Button,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
-const app = () => {
+const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!username) errors.username = "Username is required";
+    if (!password) errors.password = "Password is required";
+
+    setErrors(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      console.log("Submitted", username, password);
+      setUsername("");
+      setPassword("");
+      setErrors({});
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <ImageBackground source={coffeeImage} style={styles}>
-        <Text style={styles.text}>Coffee Shop</Text>
-      </ImageBackground>
-    </View>
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={Platform.OS === "android" ? 100 : 0}
+      style={styles.container}
+    >
+      <View style={styles.form}>
+        <Image
+          source={require("@/assets/images/tea.gif")}
+          // source={require("@/assets/images/adaptive-icon.png")}
+          style={{
+            width: 200,
+            height: 200,
+            alignSelf: "center",
+            marginBottom: 50,
+          }}
+        />
+        <Text style={styles.label}>Username</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your username"
+          value={username}
+          onChangeText={setUsername}
+        />
+        {errors.username ? (
+          <Text style={styles.errorText}>{errors.username}</Text>
+        ) : null}
+
+        <Text style={styles.label}>Password</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter your password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        {errors.password ? (
+          <Text style={styles.errorText}>{errors.password}</Text>
+        ) : null}
+
+        <Button title="Login" onPress={handleSubmit} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
-
-export default app;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    flex: 1,
-    resizeMode: "cover",
     justifyContent: "center",
+    paddingHorizontal: 20,
+    backgroundColor: "#f5f5f5",
   },
-  text: {
-    fontSize: 40,
-    color: "white",
-    textAlign: "center",
+  form: {
+    backgroundColor: "#ffffff",
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
     fontWeight: "bold",
   },
+  input: {
+    height: 40,
+    borderColor: "#ddd",
+    borderWidth: 1,
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 5,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
+  },
 });
+
+export default LoginForm;
