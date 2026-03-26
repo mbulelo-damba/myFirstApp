@@ -4,11 +4,13 @@
     "slug": "myFirstApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/tea.gif",
+    "icon": "./assets/images/icon.png",
     "scheme": "myfirstapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
+    "ios": {
+      "supportsTablet": true
+    },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -17,15 +19,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.myFirstApp",
-      "googleServicesFile": "./google-services.json"
-    },
-
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.myFirstApp",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
@@ -36,8 +30,7 @@
       [
         "expo-splash-screen",
         {
-          // "image": "./assets/images/splash-icon.png",
-          "image": "./assets/images/tea.gif",
+          "image": "./assets/images/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",
@@ -45,19 +38,8 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      "@react-native-firebase/app",
-      "@react-native-firebase/auth",
-      [
-        "expo-build-properties",
-        {
-          "ios": {
-            "useFrameworks": "static"
-          }
-        }
       ]
     ],
-
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
